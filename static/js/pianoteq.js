@@ -29,14 +29,16 @@ async function rpc(method, params=[], id=0) {
   return data.result;
 }
 
-async function get_display_data(include_demos = true) {
+async function get_display_data(include_demos = false) {
   const preset_promise = rpc("getListOfPresets");
   const info_promise = rpc("getInfo");
   const parameters_promise = rpc("getParameters");
+  const audio_device_promise = rpc("getAudioDeviceInfo");
 
   let preset_result = await preset_promise;
   let info_result = await info_promise;
   let parameters_result = await parameters_promise;
+  let audio_device_result = await audio_device_promise;
 
   // Info result appears to be a list for some reason
   info_result = info_result[0];
@@ -81,6 +83,7 @@ async function get_display_data(include_demos = true) {
     output_mode: output_mode,
     data_table: [
       [info_result.product_name, info_result.version],
+      ["Output", audio_device_result.audio_output_device_name],
     ],
   };
 

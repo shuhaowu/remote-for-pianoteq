@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "Pianoteq remote",
+  "short_name": "Pianoteq remote",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Remote control for Pianoteq",
+  "icons": [{
+    "src": "static/imgs/pianoteq48.png",
+    "sizes": "48x48",
+    "type": "image/png"
+  }, {
+    "src": "static/imgs/pianoteq72.png",
+    "sizes": "72x72",
+    "type": "image/png"
+  }, {
+    "src": "static/imgs/pianoteq96.png",
+    "sizes": "96x96",
+    "type": "image/png"
+  }, {
+    "src": "static/imgs/pianoteq128.png",
+    "sizes": "128x128",
+    "type": "image/png"
+  }]
+}

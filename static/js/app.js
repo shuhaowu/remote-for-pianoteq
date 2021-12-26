@@ -54,9 +54,6 @@ async function refresh_and_reenable_ui(ui) {
 
 async function main() {
   let ui = {
-    btn_undo: document.getElementById("undo"),
-    btn_redo: document.getElementById("redo"),
-
     select_preset: document.getElementById("preset"),
     select_output_mode: document.getElementById("output-mode"),
 
