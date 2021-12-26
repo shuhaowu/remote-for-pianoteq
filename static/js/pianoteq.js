@@ -29,7 +29,7 @@ async function rpc(method, params=[], id=0) {
   return data.result;
 }
 
-async function get_display_data(include_demos = false) {
+async function get_display_data(include_demos = true) {
   const preset_promise = rpc("getListOfPresets");
   const info_promise = rpc("getInfo");
   const parameters_promise = rpc("getParameters");
@@ -66,27 +66,37 @@ async function get_display_data(include_demos = false) {
 
   for (let i in parameters_result) {
     let item = parameters_result[i];
-    parameters[item.id] = item.text;
+    parameters[item.id] = item;
+  }
+
+  let output_mode = parameters["Output Mode"].text;
+  if (output_mode == "Sterophonic") {
+    // Pianoteq 7.5.2 returns spelling even though in set parameters it is done correctly. So we fix it here.
+    output_mode = "Stereophonic"
   }
 
   let data = {
     preset: info_result.current_preset.name,
     available_presets: available_presets,
-    output_mode: parameters["Output Mode"],
+    output_mode: output_mode,
     data_table: [
       [info_result.product_name, info_result.version],
     ],
   };
 
+  console.log(data);
+
   return data;
 }
 
 async function load_preset(name) {
-
+  console.log(`load_preset(${name})`);
+  return await rpc("loadPreset", {"name": name});
 }
 
 async function set_sound_output(output_mode) {
-
+  console.log(`set_sound_output(${output_mode})`);
+  return await rpc("setParameters", {"list": [{"id": "Output Mode", "text": output_mode}]})
 }
 
 export { rpc, get_display_data, load_preset, set_sound_output }

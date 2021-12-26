@@ -47,6 +47,11 @@ function update_ui(ui, data) {
   set_ui_disabled(ui, false);
 }
 
+async function refresh_and_reenable_ui(ui) {
+  const data = await pianoteq.get_display_data();
+  update_ui(ui, data);
+}
+
 async function main() {
   let ui = {
     btn_undo: document.getElementById("undo"),
@@ -58,6 +63,18 @@ async function main() {
     data_table: document.getElementById("data-table"),
     debug_textfield: document.getElementById("debug"),
   }
+
+  ui.select_preset.addEventListener("change", async function() {
+    set_ui_disabled(ui, true);
+    await pianoteq.load_preset(this.value);
+    await refresh_and_reenable_ui(ui);
+  })
+
+  ui.select_output_mode.addEventListener("change", async function() {
+    set_ui_disabled(ui, true);
+    await pianoteq.set_sound_output(this.value);
+    await refresh_and_reenable_ui(ui);
+  })
 
   // We wait here as we're finally ready to put the data into the various UI.
   const data = await initial_data_promise;
