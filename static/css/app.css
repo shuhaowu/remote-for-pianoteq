@@ -1,0 +1,121 @@
+body {
+  padding: 0 0.5rem;
+}
+
+/* Adapter from bootstrap */
+.container {
+  width: 100%;
+  margin: 1em auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+
+  ul {
+    padding-left: 1.75rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* Some other customizations */
+
+.full-width {
+  width: 100%;
+}
+
+form {
+  margin-bottom: 0;
+}
+
+button.small {
+  font-size: 85%;
+}
+
+hr {
+  margin: 0.75rem 0;
+  color: #DDD;
+}
+
+.row {
+  margin-bottom: 0.5rem;
+}
+
+.pure-form label {
+  text-align: center;
+  font-size: 85%;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: block;
+}
+
+button.padded-full-width {
+  width: 95%;
+  display: block;
+}
+
+button.right {
+  float: right;
+}
+
+.pure-form select {
+  height: 3rem;
+  text-align: center;
+}
+
+.pure-form input[type="number"] {
+  height: 3rem;
+  text-align: center;
+}
+
+.pure-form button {
+  height: 3rem;
+  text-align: center;
+}
+
+form#metronome-form input {
+  width: calc(100% - 2.5rem - 40px);
+}
+
+form#metronome-form button {
+  width: calc(40px + 2rem);
+  float: right;
+}
+
+footer {
+  text-align: center;
+  font-size: 70%;
+  color: #AAA;
+}
+
+footer a {
+  color: #92a4fc;
+}
