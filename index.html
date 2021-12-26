@@ -12,10 +12,10 @@
     <div class="container">
       <div class="pure-g row">
         <div class="pure-u-1-2">
-          <button class="pure-button padded-full-width small" id="undo">Undo</button>
+          <button class="pure-button padded-full-width small" id="undo" disabled>Undo</button>
         </div>
         <div class="pure-u-1-2">
-          <button class="pure-button padded-full-width small right" id="redo">Redo</button>
+          <button class="pure-button padded-full-width small right" id="redo" disabled>Redo</button>
         </div>
       </div>
 
@@ -25,50 +25,55 @@
         <div class="pure-u-1-1">
           <form class="pure-form">
             <label for="sound-output">Preset</label>
-            <select name="preset" id="preset" class="full-width">
-              <option value="NY Steinwey D Classic">NY Steinwey D Classic</option>
-              <option value="NY Steinwey D Prelude">NY Steinwey D Prelude</option>
+            <select name="preset" id="preset" class="full-width" disabled>
+              <option value="...">Loading</option>
             </select>
           </form>
         </div>
       </div>
 
+      <!--
       <div class="pure-g row">
         <div class="pure-u-1-2">
-          <button class="pure-button padded-full-width small" id="prev-preset">Prev preset</button>
+          <button class="pure-button padded-full-width small" id="prev-preset" disabled>Prev preset</button>
         </div>
         <div class="pure-u-1-2">
-          <button class="pure-button padded-full-width small right" id="next-preset">Next preset</button>
+          <button class="pure-button padded-full-width small right" id="next-preset" disabled>Next preset</button>
         </div>
       </div>
+      -->
 
       <div class="pure-g row">
         <div class="pure-u-1-1">
           <form class="pure-form">
-            <label for="sound-output">Sound output</label>
-            <select name="sound-output" id="sound-output" class="full-width">
+            <label for="output-mode">Output mode</label>
+            <select name="output-mode" id="output-mode" class="full-width" disabled>
               <option value="Sound Recording">Sound Recording</option>
               <option value="Binaural">Binaural</option>
+              <option value="Stereophonic">Stereophonic</option>
+              <option value="Monophonic">Monophonic</option>
             </select>
           </form>
         </div>
       </div>
 
+      <!--
       <div class="pure-g row">
         <div class="pure-u-1-1">
           <form class="pure-form">
             <label for="reverb">Reverb</label>
-            <select name="reverb" id="reverb" class="full-width">
+            <select name="reverb" id="reverb" class="full-width" disabled>
               <option value="Concert hall">Concern hall</option>
               <option value="Small hall">Small hall</option>
             </select>
           </form>
         </div>
       </div>
+      -->
 
+      <!--
       <div class="pure-g row">
         <div class="pure-u-1-1">
-
           <form class="pure-form" id="metronome-form">
             <label for="metronome">Metronome BPM</label>
             <button class="pure-button" id="metronome-toggle">Start</button>
@@ -76,20 +81,17 @@
           </form>
         </div>
       </div>
+      -->
 
       <hr />
 
       <div class="pure-g row">
         <div class="pure-u-1-1" style="text-align: center;">
           <table class="pure-table full-width pure-table-bordered">
-            <tbody>
-              <tr>
-                <td>Audio device</td>
-                <td>Roland FP90X</td>
-              </tr>
-              <tr>
-                <td>CPU Usage</td>
-                <td>22%</td>
+            <tbody id="data-table">
+              <tr style="text-align: center;">
+                <td>Loading...</td>
+                <td>Please wait...</td>
               </tr>
             </tbody>
           </table>
@@ -103,7 +105,7 @@
       </div>
 
       <footer>
-        Powered by <a href="https://github.com/shuhaowu/remote-for-pianoteq">Remote for Pianoteq</a>
+        Powered by <a href="https://github.com/shuhaowu/remote-for-pianoteq" target="_blank">Remote for Pianoteq</a>
       </footer>
 
     </div>

@@ -32,6 +32,31 @@ class StaticAndForwardHandler(SimpleHTTPRequestHandler):
 
     super().do_GET()
 
+  def do_POST(self):
+    if self.path.startswith("/jsonrpc"):
+      conn = http.client.HTTPConnection(pianoteq_host, pianoteq_port)
+      try:
+        length = int(self.headers.get('content-length'))
+        conn.request("POST", self.path, self.rfile.read(length), {"Content-type": "application/json"})
+      except Exception as e:
+        self.send_response(502)
+        self.send_header("Content-type", "text/plain")
+        self.end_headers()
+        self.wfile.write(bytes("Bad gateway: {}".format(e), "utf-8"))
+        raise
+
+      res = conn.getresponse()
+      self.send_response(res.status)
+      for header, value in res.getheaders():
+        self.send_header(header, value)
+
+      self.end_headers()
+
+      self.wfile.write(res.read())
+      return
+
+    super().do_POST()
+
 
 if __name__ == "__main__":
   if not os.path.isfile("index.html"):
