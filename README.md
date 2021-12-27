@@ -12,10 +12,12 @@ ensure that the application is fast even on the lowest end Android devices. I
 personally use an older, low-end phone as the controller for my Pianoteq
 installation on a Raspberry Pi 4 (with realtime patch).
 
-![Remote for Pianoteq screenshot](remote-for-pianoteq.png)
+<img width="400" alt="" src="remote-for-pianoteq.jpg">
 
 Feature wishlist:
 
+- I can't seem to load my own custom presets without it saying "preset load
+  failed".
 - Use PWA to make the app installable on a mobile device via the browser.
 - The ability to control reverb presets. With the API available in 7.5, you can
   adjust individual reverb settings but not presets (at least as far as I can
