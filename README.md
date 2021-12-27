@@ -14,6 +14,8 @@ installation on a Raspberry Pi 4 (with realtime patch).
 
 <img width="400" alt="" src="remote-for-pianoteq.jpg">
 
+See forum thread: https://forum.modartt.com/viewtopic.php?id=9073
+
 Feature wishlist:
 
 - I can't seem to load my own custom presets without it saying "preset load
