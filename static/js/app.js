@@ -26,7 +26,18 @@ function update_ui(ui, data) {
   ui.select_output_mode.value = data.output_mode;
 
   // Build the reverb dropdown.
-  ui.select_reverb.value = data.reverb;
+  if (!data.reverb) {
+    let unknown_reverb_preset = document.getElementById("unknown-reverb-preset");
+    if (!unknown_reverb_preset) {
+      unknown_reverb_preset = document.createElement("option");
+      unknown_reverb_preset.value = "Unknown/Custom";
+      unknown_reverb_preset.text = "Unknown/Custom";
+      ui.select_reverb.appendChild(unknown_reverb_preset);
+      ui.select_reverb.value = unknown_reverb_preset.value;
+    }
+  } else {
+    ui.select_reverb.value = data.reverb;
+  }
 
   // Build the data table
   ui.data_table.innerHTML = "";

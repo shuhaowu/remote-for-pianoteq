@@ -26,6 +26,9 @@ Feature wishlist/known issues:
   the list of custom reverb presets from the API.
 - Ability to control the custom velocity curve preset. Again, listing the
   custom velocity curve preset seems not be possible from the API.
+- Some Piano preset's reverb preset is a custom one. The API returns
+  "undefined" as the preset which means we can't really display a valid value
+  in the UI. When this happens, the UI displays a reverb of "Unknown/Custom".
 
 Running this
 ------------
