@@ -16,7 +16,7 @@ installation on a Raspberry Pi 4 (with realtime patch).
 
 See forum thread: https://forum.modartt.com/viewtopic.php?id=9073
 
-Feature wishlist:
+Feature wishlist/known issues:
 
 - I can't seem to load my own custom presets without it saying "preset load
   failed".
@@ -28,12 +28,6 @@ Feature wishlist:
   by 7.5 API as far as I can tell.
 - Ability to control the velocity curve preset. Again, not available in the API
   as far as I can tell.
-
-Known issues:
-
-- If an error occurred while changing settings, the UI will be stuck in a
-  disabled state. This is because the error handling code hasn't been written
-  yet as this is still a proof-of-concept.
 
 Running this
 ------------

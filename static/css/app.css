@@ -69,6 +69,18 @@ hr {
   margin-bottom: 0.5rem;
 }
 
+div#flash {
+  border: 1px solid #AAA;
+  background-color: #FCA4A5;
+  padding: 0 1rem;
+  text-align: center;
+  display: none;
+}
+
+hr#flash-hr {
+  display: none;
+}
+
 .pure-form label {
   text-align: center;
   font-size: 85%;

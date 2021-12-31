@@ -52,6 +52,12 @@ async function refresh_and_reenable_ui(ui) {
   update_ui(ui, data);
 }
 
+function handle_error(ui, error) {
+  ui.flash_message.textContent = `${error}. Please reload the page.`;
+  ui.flash_box.style.display = "block";
+  ui.flash_hr.style.display = "block";
+}
+
 async function main() {
   let ui = {
     select_preset: document.getElementById("preset"),
@@ -59,23 +65,36 @@ async function main() {
 
     data_table: document.getElementById("data-table"),
     debug_textfield: document.getElementById("debug"),
+
+    flash_box: document.getElementById("flash"),
+    flash_message: document.getElementById("flash-message"),
+    flash_hr: document.getElementById("flash-hr"),
   }
 
   ui.select_preset.addEventListener("change", async function() {
     set_ui_disabled(ui, true);
-    await pianoteq.load_preset(this.value);
-    await refresh_and_reenable_ui(ui);
+    await pianoteq.load_preset(this.value).then(async(data) => {
+      await refresh_and_reenable_ui(ui);
+    }).catch((error) => {
+      handle_error(ui, error);
+    });
   })
 
   ui.select_output_mode.addEventListener("change", async function() {
     set_ui_disabled(ui, true);
-    await pianoteq.set_sound_output(this.value);
-    await refresh_and_reenable_ui(ui);
+    await pianoteq.set_sound_output(this.value).then(async(data) => {
+      await refresh_and_reenable_ui(ui);
+    }).catch((error) => {
+      handle_error(ui, error);
+    });
   })
 
   // We wait here as we're finally ready to put the data into the various UI.
-  const data = await initial_data_promise;
-  update_ui(ui, data);
+  await initial_data_promise.then((data) => {
+    update_ui(ui, data);
+  }).catch((error) => {
+    handle_error(ui, error);
+  });
 }
 
 if (document.readyState != "loading") {
