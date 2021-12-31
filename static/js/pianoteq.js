@@ -80,6 +80,7 @@ async function get_display_data(include_demos = false) {
   let data = {
     preset: info_result.current_preset.name,
     available_presets: available_presets,
+    reverb: info_result.current_preset.mini_presets.reverb,
     output_mode: output_mode,
     data_table: [
       [info_result.product_name, info_result.version],
@@ -102,4 +103,8 @@ async function set_sound_output(output_mode) {
   return await rpc("setParameters", {list: [{id: "Output Mode", text: output_mode}]})
 }
 
-export { rpc, get_display_data, load_preset, set_sound_output }
+async function set_reverb(reverb) {
+  return await rpc("loadPreset", {name: reverb, bank: "", preset_type: "reverb"})
+}
+
+export { rpc, get_display_data, load_preset, set_sound_output, set_reverb }

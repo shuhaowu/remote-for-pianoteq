@@ -20,13 +20,12 @@ Feature wishlist/known issues:
 
 - Inability to load FXP. I'm not sure how to do this via the API.
 - Use PWA to make the app installable on a mobile device via the browser.
-- The ability to control reverb presets. With the API available in 7.5, you can
-  adjust individual reverb settings but not presets (at least as far as I can
-  see).
 - Start and stop the metronome as well as setting the tempo. Also not supported
   by 7.5 API as far as I can tell.
-- Ability to control the velocity curve preset. Again, not available in the API
-  as far as I can tell.
+- Ability to change to a custom reverb preset. There seems to be no way to list
+  the list of custom reverb presets from the API.
+- Ability to control the custom velocity curve preset. Again, listing the
+  custom velocity curve preset seems not be possible from the API.
 
 Running this
 ------------

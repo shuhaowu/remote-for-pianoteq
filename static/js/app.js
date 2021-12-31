@@ -11,7 +11,6 @@ function set_ui_disabled(ui, disabled) {
   }
 }
 
-
 function update_ui(ui, data) {
   // Build the preset drop down.
   ui.select_preset.innerHTML = "";
@@ -25,6 +24,9 @@ function update_ui(ui, data) {
 
   // Build the output mode dropdown.
   ui.select_output_mode.value = data.output_mode;
+
+  // Build the reverb dropdown.
+  ui.select_reverb.value = data.reverb;
 
   // Build the data table
   ui.data_table.innerHTML = "";
@@ -61,6 +63,7 @@ async function main() {
   let ui = {
     select_preset: document.getElementById("preset"),
     select_output_mode: document.getElementById("output-mode"),
+    select_reverb: document.getElementById("reverb"),
 
     data_table: document.getElementById("data-table"),
     debug_textfield: document.getElementById("debug"),
@@ -82,6 +85,15 @@ async function main() {
   ui.select_output_mode.addEventListener("change", async function() {
     set_ui_disabled(ui, true);
     await pianoteq.set_sound_output(this.value).then(async(data) => {
+      await refresh_and_reenable_ui(ui);
+    }).catch((error) => {
+      handle_error(ui, error);
+    });
+  })
+
+  ui.select_reverb.addEventListener("change", async function() {
+    set_ui_disabled(ui, true);
+    await pianoteq.set_reverb(this.value).then(async(data) => {
       await refresh_and_reenable_ui(ui);
     }).catch((error) => {
       handle_error(ui, error);
