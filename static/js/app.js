@@ -15,11 +15,10 @@ function set_ui_disabled(ui, disabled) {
 function update_ui(ui, data) {
   // Build the preset drop down.
   ui.select_preset.innerHTML = "";
-  for (let i in data.available_presets) {
-    let preset = data.available_presets[i];
+  for (let preset_name in data.available_presets) {
     let option = document.createElement("option");
-    option.value = preset;
-    option.text = preset;
+    option.value = preset_name;
+    option.text = preset_name;
     ui.select_preset.appendChild(option);
   }
   ui.select_preset.value = data.preset;
@@ -73,7 +72,7 @@ async function main() {
 
   ui.select_preset.addEventListener("change", async function() {
     set_ui_disabled(ui, true);
-    await pianoteq.load_preset(this.value).then(async(data) => {
+    await pianoteq.load_preset(this.value, pianoteq_data.available_presets[this.value].bank).then(async(data) => {
       await refresh_and_reenable_ui(ui);
     }).catch((error) => {
       handle_error(ui, error);
@@ -90,8 +89,9 @@ async function main() {
   })
 
   // We wait here as we're finally ready to put the data into the various UI.
-  await initial_data_promise.then((data) => {
+  const pianoteq_data = await initial_data_promise.then((data) => {
     update_ui(ui, data);
+    return data;
   }).catch((error) => {
     handle_error(ui, error);
   });

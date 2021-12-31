@@ -18,8 +18,7 @@ See forum thread: https://forum.modartt.com/viewtopic.php?id=9073
 
 Feature wishlist/known issues:
 
-- I can't seem to load my own custom presets without it saying "preset load
-  failed".
+- Inability to load FXP. I'm not sure how to do this via the API.
 - Use PWA to make the app installable on a mobile device via the browser.
 - The ability to control reverb presets. With the API available in 7.5, you can
   adjust individual reverb settings but not presets (at least as far as I can

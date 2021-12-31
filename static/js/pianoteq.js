@@ -44,22 +44,22 @@ async function get_display_data(include_demos = false) {
   info_result = info_result[0];
 
   // Parse the available presets, only including the non-demo ones.
-  let available_presets = [];
-  let current_preset_found = false;
+  let available_presets = {};
   for (let i in preset_result) {
     let preset = preset_result[i];
     if (!include_demos && preset.license_status == "demo") {
       continue;
     }
 
-    available_presets.push(preset.name);
-    if (preset.name == info_result.current_preset.name) {
-      current_preset_found = true;
-    }
+    // ES2015 should guarentee that iteration order is in insertion order.
+    available_presets[preset.name] = {bank: preset.bank};
   }
 
-  if (!current_preset_found) {
-    available_presets = [info_result.current_preset.name].concat(available_presets);
+  if (!(info_result.current_preset.name in available_presets)) {
+    // Invalid bank value is OK, because this entry is only used for display,
+    // as we will never switch from the same instrument to itself with the
+    // dropdown menu.
+    available_presets[info_result.current_preset.name] = {bank: ""};
   }
 
   // Parsing parameters result
@@ -92,14 +92,14 @@ async function get_display_data(include_demos = false) {
   return data;
 }
 
-async function load_preset(name) {
-  console.log(`load_preset(${name})`);
-  return await rpc("loadPreset", {"name": name});
+async function load_preset(name, bank) {
+  console.log(`load_preset(${name}, ${bank})`);
+  return await rpc("loadPreset", {name: name, bank: bank});
 }
 
 async function set_sound_output(output_mode) {
   console.log(`set_sound_output(${output_mode})`);
-  return await rpc("setParameters", {"list": [{"id": "Output Mode", "text": output_mode}]})
+  return await rpc("setParameters", {list: [{id: "Output Mode", text: output_mode}]})
 }
 
 export { rpc, get_display_data, load_preset, set_sound_output }
