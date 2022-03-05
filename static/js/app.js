@@ -56,6 +56,9 @@ function update_ui(ui, data) {
     ui.data_table.appendChild(tr);
   }
 
+  ui.metronome_bpm.value = data.metronome.bpm;
+  ui.metronome_toggle.innerText = data.metronome.enabled ? 'Stop' : 'Start';
+
   set_ui_disabled(ui, false);
 }
 
@@ -117,9 +120,8 @@ async function main() {
   let metronome_enabled = false;
   ui.metronome_toggle.addEventListener("click", async function() {
     set_ui_disabled(ui, true);
-    metronome_enabled = !metronome_enabled;
-    ui.metronome_toggle.innerText = metronome_enabled ? 'Stop' : 'Start';
-    let bpm = parseInt(ui.metronome_bpm.value);
+    const metronome_enabled = ui.metronome_toggle.innerText === 'Start';
+    const bpm = parseInt(ui.metronome_bpm.value);
     await pianoteq.set_metronome(metronome_enabled, bpm).then(async(data) => {
       await refresh_and_reenable_ui(ui);
     }).catch((error) => {
