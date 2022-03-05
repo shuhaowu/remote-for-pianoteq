@@ -82,6 +82,9 @@ async function main() {
     flash_box: document.getElementById("flash"),
     flash_message: document.getElementById("flash-message"),
     flash_hr: document.getElementById("flash-hr"),
+
+    metronome_toggle: document.getElementById("metronome-toggle"),
+    metronome_bpm: document.getElementById("metronome"),
   }
 
   ui.select_preset.addEventListener("change", async function() {
@@ -105,6 +108,19 @@ async function main() {
   ui.select_reverb.addEventListener("change", async function() {
     set_ui_disabled(ui, true);
     await pianoteq.set_reverb(this.value).then(async(data) => {
+      await refresh_and_reenable_ui(ui);
+    }).catch((error) => {
+      handle_error(ui, error);
+    });
+  })
+
+  let metronome_enabled = false;
+  ui.metronome_toggle.addEventListener("click", async function() {
+    set_ui_disabled(ui, true);
+    metronome_enabled = !metronome_enabled;
+    ui.metronome_toggle.innerText = metronome_enabled ? 'Stop' : 'Start';
+    let bpm = parseInt(ui.metronome_bpm.value);
+    await pianoteq.set_metronome(metronome_enabled, bpm).then(async(data) => {
       await refresh_and_reenable_ui(ui);
     }).catch((error) => {
       handle_error(ui, error);

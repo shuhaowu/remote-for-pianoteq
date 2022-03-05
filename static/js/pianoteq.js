@@ -107,4 +107,8 @@ async function set_reverb(reverb) {
   return await rpc("loadPreset", {name: reverb, bank: "", preset_type: "reverb"})
 }
 
-export { rpc, get_display_data, load_preset, set_sound_output, set_reverb }
+async function set_metronome(enabled, bpm) {
+  return await rpc("setMetronome", {bpm: bpm, enabled: enabled})
+}
+
+export { rpc, get_display_data, load_preset, set_sound_output, set_reverb, set_metronome }
