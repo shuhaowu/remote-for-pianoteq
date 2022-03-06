@@ -57,6 +57,9 @@ function update_ui(ui, data) {
   }
 
   ui.metronome_bpm.value = data.metronome.bpm;
+  ui.metronome_signature.value = data.metronome.timesig;
+  ui.metronome_volume.value = data.metronome.volume_db;
+  ui.metronome_accent.checked = data.metronome.accentuate;
   ui.metronome_toggle.innerText = data.metronome.enabled ? 'Stop' : 'Start';
 
   set_ui_disabled(ui, false);
@@ -88,6 +91,9 @@ async function main() {
 
     metronome_toggle: document.getElementById("metronome-toggle"),
     metronome_bpm: document.getElementById("metronome"),
+    metronome_signature: document.getElementById("metronome-signature"),
+    metronome_volume: document.getElementById("metronome-volume"),
+    metronome_accent: document.getElementById("metronome-accent"),
   }
 
   ui.select_preset.addEventListener("change", async function() {
@@ -117,12 +123,14 @@ async function main() {
     });
   })
 
-  let metronome_enabled = false;
   ui.metronome_toggle.addEventListener("click", async function() {
     set_ui_disabled(ui, true);
     const metronome_enabled = ui.metronome_toggle.innerText === 'Start';
     const bpm = parseInt(ui.metronome_bpm.value);
-    await pianoteq.set_metronome(metronome_enabled, bpm).then(async(data) => {
+    const signature = ui.metronome_signature.value;
+    const volume = parseInt(ui.metronome_volume.value);
+    const accent = ui.metronome_accent.checked;
+    await pianoteq.set_metronome(metronome_enabled, bpm, signature, volume, accent).then(async(data) => {
       await refresh_and_reenable_ui(ui);
     }).catch((error) => {
       handle_error(ui, error);
