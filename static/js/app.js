@@ -123,19 +123,32 @@ async function main() {
     });
   })
 
-  ui.metronome_toggle.addEventListener("click", async function() {
+  const metronome_update = async function() {
     set_ui_disabled(ui, true);
-    const metronome_enabled = ui.metronome_toggle.innerText === 'Start';
     const bpm = parseInt(ui.metronome_bpm.value);
     const signature = ui.metronome_signature.value;
     const volume = parseInt(ui.metronome_volume.value);
     const accent = ui.metronome_accent.checked;
-    await pianoteq.set_metronome(metronome_enabled, bpm, signature, volume, accent).then(async(data) => {
+    await pianoteq.config_metronome(bpm, signature, volume, accent).then(async(data) => {
       await refresh_and_reenable_ui(ui);
     }).catch((error) => {
       handle_error(ui, error);
     });
-  })
+  }
+  ui.metronome_bpm.addEventListener("change", metronome_update);
+  ui.metronome_signature.addEventListener("change", metronome_update);
+  ui.metronome_volume.addEventListener("change", metronome_update);
+  ui.metronome_accent.addEventListener("change", metronome_update);
+
+  ui.metronome_toggle.addEventListener("click", async function() {
+    set_ui_disabled(ui, true);
+    const metronome_enabled = ui.metronome_toggle.innerText === 'Start';
+    await pianoteq.set_metronome(metronome_enabled).then(async(data) => {
+      await refresh_and_reenable_ui(ui);
+    }).catch((error) => {
+      handle_error(ui, error);
+    });
+  });
 
   // We wait here as we're finally ready to put the data into the various UI.
   const pianoteq_data = await initial_data_promise.then((data) => {

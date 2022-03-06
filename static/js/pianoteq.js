@@ -110,8 +110,12 @@ async function set_reverb(reverb) {
   return await rpc("loadPreset", {name: reverb, bank: "", preset_type: "reverb"})
 }
 
-async function set_metronome(enabled, bpm, signature, volume, accent) {
-  return await rpc("setMetronome", {bpm: bpm, enabled: enabled, timesig: signature, volume_db: volume, accentuate: accent})
+async function config_metronome(bpm, signature, volume, accent) {
+  return await rpc("setMetronome", {bpm: bpm, timesig: signature, volume_db: volume, accentuate: accent});
 }
 
-export { rpc, get_display_data, load_preset, set_sound_output, set_reverb, set_metronome }
+async function set_metronome(enabled) {
+  return await rpc("setMetronome", {enabled: enabled});
+}
+
+export { rpc, get_display_data, load_preset, set_sound_output, set_reverb, config_metronome, set_metronome }
