@@ -81,12 +81,15 @@ hr#flash-hr {
   display: none;
 }
 
-.pure-form label {
-  text-align: center;
-  font-size: 85%;
+.pure-form label:not(#metronome-accent-label) {
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.pure-form label {
   display: block;
+  text-align: center;
+  font-size: 85%;
 }
 
 button.padded-full-width {
@@ -113,13 +116,12 @@ button.right {
   text-align: center;
 }
 
-form#metronome-form input {
-  width: calc(100% - 2.5rem - 40px);
+input#metronome {
+  width: 100%;
 }
 
 form#metronome-form button {
-  width: calc(40px + 2rem);
-  float: right;
+  width: 100%;
 }
 
 footer {

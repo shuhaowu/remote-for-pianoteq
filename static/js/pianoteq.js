@@ -34,11 +34,13 @@ async function get_display_data(include_demos = false) {
   const info_promise = rpc("getInfo");
   const parameters_promise = rpc("getParameters");
   const audio_device_promise = rpc("getAudioDeviceInfo");
+  const metronome_promise = rpc("getMetronome");
 
   let preset_result = await preset_promise;
   let info_result = await info_promise;
   let parameters_result = await parameters_promise;
   let audio_device_result = await audio_device_promise;
+  let metronome_result = await metronome_promise;
 
   // Info result appears to be a list for some reason
   info_result = info_result[0];
@@ -86,6 +88,7 @@ async function get_display_data(include_demos = false) {
       [info_result.product_name, info_result.version],
       ["Output", audio_device_result.audio_output_device_name],
     ],
+    metronome: metronome_result[0],
   };
 
   console.log(data);
@@ -107,4 +110,12 @@ async function set_reverb(reverb) {
   return await rpc("loadPreset", {name: reverb, bank: "", preset_type: "reverb"})
 }
 
-export { rpc, get_display_data, load_preset, set_sound_output, set_reverb }
+async function config_metronome(bpm, signature, volume, accent) {
+  return await rpc("setMetronome", {bpm: bpm, timesig: signature, volume_db: volume, accentuate: accent});
+}
+
+async function set_metronome(enabled) {
+  return await rpc("setMetronome", {enabled: enabled});
+}
+
+export { rpc, get_display_data, load_preset, set_sound_output, set_reverb, config_metronome, set_metronome }

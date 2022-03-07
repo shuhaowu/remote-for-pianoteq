@@ -56,6 +56,12 @@ function update_ui(ui, data) {
     ui.data_table.appendChild(tr);
   }
 
+  ui.metronome_bpm.value = data.metronome.bpm;
+  ui.metronome_signature.value = data.metronome.timesig;
+  ui.metronome_volume.value = data.metronome.volume_db;
+  ui.metronome_accent.checked = data.metronome.accentuate;
+  document.metronomeState = data.metronome.enabled;
+
   set_ui_disabled(ui, false);
 }
 
@@ -82,6 +88,12 @@ async function main() {
     flash_box: document.getElementById("flash"),
     flash_message: document.getElementById("flash-message"),
     flash_hr: document.getElementById("flash-hr"),
+
+    metronome_toggle: document.getElementById("metronome-toggle"),
+    metronome_bpm: document.getElementById("metronome"),
+    metronome_signature: document.getElementById("metronome-signature"),
+    metronome_volume: document.getElementById("metronome-volume"),
+    metronome_accent: document.getElementById("metronome-accent"),
   }
 
   ui.select_preset.addEventListener("change", async function() {
@@ -110,6 +122,32 @@ async function main() {
       handle_error(ui, error);
     });
   })
+
+  const metronome_update = async function() {
+    set_ui_disabled(ui, true);
+    const bpm = parseInt(ui.metronome_bpm.value);
+    const signature = ui.metronome_signature.value;
+    const volume = parseInt(ui.metronome_volume.value);
+    const accent = ui.metronome_accent.checked;
+    await pianoteq.config_metronome(bpm, signature, volume, accent).then(async(data) => {
+      await refresh_and_reenable_ui(ui);
+    }).catch((error) => {
+      handle_error(ui, error);
+    });
+  }
+  ui.metronome_bpm.addEventListener("change", metronome_update);
+  ui.metronome_signature.addEventListener("change", metronome_update);
+  ui.metronome_volume.addEventListener("change", metronome_update);
+  ui.metronome_accent.addEventListener("change", metronome_update);
+
+  ui.metronome_toggle.addEventListener("click", async function() {
+    set_ui_disabled(ui, true);
+    await pianoteq.set_metronome(!document.metronomeState).then(async(data) => {
+      await refresh_and_reenable_ui(ui);
+    }).catch((error) => {
+      handle_error(ui, error);
+    });
+  });
 
   // We wait here as we're finally ready to put the data into the various UI.
   const pianoteq_data = await initial_data_promise.then((data) => {
