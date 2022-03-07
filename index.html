@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Remote for Pianoteq</title>
@@ -109,9 +110,9 @@
         <div class="pure-u-1-1">
           <form class="pure-form" id="metronome-form">
             <label for="metronome">Metronome tempo</label>
-            <input type="number" value="120" min="40" max="208" id="metronome" />
+            <input type="number" value="120" min="40" max="208" id="metronome" disabled />
             <label for="metronome-signature">Metronome time signature</label>
-            <select name="metronome-signature" id="metronome-signature" class="full-width">
+            <select name="metronome-signature" id="metronome-signature" class="full-width" disabled>
               <option value="1/1">1/1</option>
               <option value="1/2">1/2</option>
               <option value="2/4">2/4</option>
@@ -125,7 +126,7 @@
               <!-- option value="12/8">12/8</option -->
             </select>
             <label for="metronome-volume">Metronome volume</label>
-            <select name="metronome-volume" id="metronome-volume" class="full-width">
+            <select name="metronome-volume" id="metronome-volume" class="full-width" disabled>
               <option value="-96">Silent</option>
               <option value="-35">-35 dB</option>
               <option value="-30">-30 dB</option>
@@ -149,7 +150,7 @@
               <option value="20">+20 dB</option>
             </select>
             <label for="metronome-accent" id="metronome-accent-label">
-              <input type="checkbox" id="metronome-accent" />
+              <input type="checkbox" id="metronome-accent" disabled />
               Accent on first beat
             </label>
             <button class="pure-button" id="metronome-toggle">Toggle Metronome</button>
