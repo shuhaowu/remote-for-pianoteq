@@ -56,7 +56,15 @@ function update_ui(ui, data) {
     ui.data_table.appendChild(tr);
   }
 
-  ui.metronome_bpm.value = data.metronome.bpm;
+  // Find the closest bpm value from the list of options
+  for (const bpm_opt of ui.metronome_bpm.options) {
+    if (parseInt(bpm_opt.value) <= parseInt(data.metronome.bpm)) {
+      ui.metronome_bpm.value = bpm_opt.value;
+    } else {
+      break;
+    }
+  }
+
   ui.metronome_signature.value = data.metronome.timesig;
   ui.metronome_volume.value = data.metronome.volume_db;
   ui.metronome_accent.checked = data.metronome.accentuate;
@@ -122,6 +130,13 @@ async function main() {
       handle_error(ui, error);
     });
   })
+
+  // Reproduces the list from the PianoTeq tempo menu
+  for (let i = 40; i < 60; i += 4) ui.metronome_bpm.add(new Option(i + ' bpm', i));
+  for (let i = 60; i < 72; i += 3) ui.metronome_bpm.add(new Option(i + ' bpm', i));
+  for (let i = 72; i < 120; i += 4) ui.metronome_bpm.add(new Option(i + ' bpm', i));
+  for (let i = 120; i < 144; i += 6) ui.metronome_bpm.add(new Option(i + ' bpm', i));
+  for (let i = 144; i <= 208; i += 8) ui.metronome_bpm.add(new Option(i + ' bpm', i));
 
   const metronome_update = async function() {
     set_ui_disabled(ui, true);
