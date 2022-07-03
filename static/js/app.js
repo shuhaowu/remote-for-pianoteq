@@ -57,8 +57,9 @@ function update_ui(ui, data) {
   }
 
   // Find the closest bpm value from the list of options
+  const bpm = Number(data.metronome.bpm);
   for (const bpm_opt of ui.metronome_bpm.options) {
-    if (parseInt(bpm_opt.value) <= parseInt(data.metronome.bpm)) {
+    if (Number(bpm_opt.value) <= bpm) {
       ui.metronome_bpm.value = bpm_opt.value;
     } else {
       break;
@@ -137,12 +138,17 @@ async function main() {
   for (let i = 72; i < 120; i += 4) ui.metronome_bpm.add(new Option(i + ' bpm', i));
   for (let i = 120; i < 144; i += 6) ui.metronome_bpm.add(new Option(i + ' bpm', i));
   for (let i = 144; i <= 208; i += 8) ui.metronome_bpm.add(new Option(i + ' bpm', i));
+  ui.metronome_bpm.add(new Option('Other value...', 999));
 
   const metronome_update = async function() {
     set_ui_disabled(ui, true);
-    const bpm = parseInt(ui.metronome_bpm.value);
+    const bpm = Number(
+      ui.metronome_bpm.value == '999'
+        ? window.prompt('Enter the new BPM value', '')
+        : ui.metronome_bpm.value
+    );
     const signature = ui.metronome_signature.value;
-    const volume = parseInt(ui.metronome_volume.value);
+    const volume = Number(ui.metronome_volume.value);
     const accent = ui.metronome_accent.checked;
     await pianoteq.config_metronome(bpm, signature, volume, accent).then(async(data) => {
       await refresh_and_reenable_ui(ui);
