@@ -71,6 +71,7 @@ class StaticAndForwardHandler(SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
+  os.chdir(sys.path[0])
   if not os.path.isfile("index.html"):
     print("error: please launch this program in the same directory as index.html", file=sys.stderr)
     sys.exit(1)
