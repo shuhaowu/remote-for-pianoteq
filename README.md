@@ -75,8 +75,9 @@ Advanced way
 2. Forward any request (GET and POST) to `/jsonrpc` to the Pianoteq.
 3. Serve manifest.webmanifest to make the app installable on a mobile browser.
 
-This can be done via a number of web servers, including nginx. Writing such a
-configuration is left as an exercise to the reader.
+This can be done via a number of web servers. Here are the examples for
+[lighttpd](conf/lighttpd/99-remote-for-pianoteq.conf) and
+[nginx](conf/nginx/remote-for-pianoteq).
 
 Credit for the app icon
 -----------------------

@@ -1,0 +1,12 @@
+# adjust the values and copy to /etc/nginx/sites-available/remote-for-pianoteq
+server {
+    location / {
+        alias /home/pi/remote-for-pianoteq/;
+    }
+    location /jsonrpc {
+        proxy_pass http://127.0.0.1:8081/jsonrpc;
+    }
+}
+types {
+    application/manifest+json webmanifest;
+}
