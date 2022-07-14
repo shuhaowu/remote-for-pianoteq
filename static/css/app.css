@@ -133,3 +133,7 @@ footer {
 footer a {
   color: #92a4fc;
 }
+
+.pure-form input[type="range"] {
+  width: 100%;
+}

@@ -39,6 +39,16 @@
       <div class="pure-g row">
         <div class="pure-u-1-1">
           <form class="pure-form">
+            <label for="volume">Volume</label>
+            <input type="range" id="volume" name="volume" min="0" max="1" step="any" list="tickmarks">
+            <datalist id="tickmarks" />
+          </form>
+        </div>
+      </div>
+
+      <div class="pure-g row">
+        <div class="pure-u-1-1">
+          <form class="pure-form">
             <label for="sound-output">Preset</label>
             <select name="preset" id="preset" class="full-width" disabled>
               <option value="...">Loading</option>
