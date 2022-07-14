@@ -30,15 +30,6 @@ class StaticAndForwardHandler(SimpleHTTPRequestHandler):
       self.wfile.write(res.read())
       return
 
-    # Kind of a hack, but whatever
-    if self.path == "/manifest.webmanifest":
-      self.send_response(200)
-      self.send_header("Content-type", "application/manifest+json")
-      self.end_headers()
-
-      with open("manifest.webmanifest", "rb") as f:
-        self.wfile.write(f.read())
-
     super().do_GET()
 
   def do_POST(self):
