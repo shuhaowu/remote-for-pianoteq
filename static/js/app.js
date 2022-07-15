@@ -12,6 +12,8 @@ function set_ui_disabled(ui, disabled) {
 }
 
 function update_ui(ui, data) {
+  ui.volume.value = data.volume;
+
   // Build the preset drop down.
   ui.select_preset.innerHTML = "";
   for (let preset_name in data.available_presets) {
@@ -87,6 +89,9 @@ function handle_error(ui, error) {
 
 async function main() {
   let ui = {
+    volume: document.getElementById("volume"),
+    tickmarks: document.getElementById("tickmarks"),
+
     select_preset: document.getElementById("preset"),
     select_output_mode: document.getElementById("output-mode"),
     select_reverb: document.getElementById("reverb"),
@@ -104,6 +109,17 @@ async function main() {
     metronome_volume: document.getElementById("metronome-volume"),
     metronome_accent: document.getElementById("metronome-accent"),
   }
+
+  for (let i = 0; i < 1; i += 0.1) ui.tickmarks.appendChild(new Option('', i));
+
+  ui.volume.addEventListener("change", async function() {
+    set_ui_disabled(ui, true);
+    await pianoteq.set_volume(this.value).then(async(data) => {
+      await refresh_and_reenable_ui(ui);
+    }).catch((error) => {
+      handle_error(ui, error);
+    });
+  })
 
   ui.select_preset.addEventListener("change", async function() {
     set_ui_disabled(ui, true);

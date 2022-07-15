@@ -80,6 +80,7 @@ async function get_display_data(include_demos = false) {
   }
 
   let data = {
+    volume: parameters["Volume"].normalized_value,
     preset: info_result.current_preset.name,
     available_presets: available_presets,
     reverb: info_result.current_preset.mini_presets.reverb,
@@ -94,6 +95,11 @@ async function get_display_data(include_demos = false) {
   console.log(data);
 
   return data;
+}
+
+async function set_volume(level) {
+  console.log(`set_volume(${level})`);
+  return await rpc("setParameters", {list: [{id: "Volume", name: "Volume", normalized_value: Number(level)}]});
 }
 
 async function load_preset(name, bank) {
@@ -118,4 +124,4 @@ async function set_metronome(enabled) {
   return await rpc("setMetronome", {enabled: enabled});
 }
 
-export { rpc, get_display_data, load_preset, set_sound_output, set_reverb, config_metronome, set_metronome }
+export { rpc, get_display_data, load_preset, set_sound_output, set_reverb, config_metronome, set_metronome, set_volume }
