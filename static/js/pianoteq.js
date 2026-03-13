@@ -65,7 +65,6 @@ async function get_display_data(include_demos = false) {
   }
 
   // Parsing parameters result
-  // For now, parse only output mode. Pianoteq doesn't seem to be output
   let parameters = {};
 
   for (let i in parameters_result) {
@@ -73,18 +72,11 @@ async function get_display_data(include_demos = false) {
     parameters[item.id] = item;
   }
 
-  let output_mode = parameters["Output Mode"].text;
-  if (output_mode == "Sterophonic") {
-    // Pianoteq 7.5.2 returns spelling even though in set parameters it is done correctly. So we fix it here.
-    output_mode = "Stereophonic"
-  }
-
   let data = {
-    volume: parameters["Volume"].normalized_value,
+    volume: parameters["volume"].normalized_value,
     preset: info_result.current_preset.name,
     available_presets: available_presets,
     reverb: info_result.current_preset.mini_presets.reverb,
-    output_mode: output_mode,
     data_table: [
       [info_result.product_name, info_result.version],
       ["Output", audio_device_result.audio_output_device_name],
@@ -99,17 +91,12 @@ async function get_display_data(include_demos = false) {
 
 async function set_volume(level) {
   console.log(`set_volume(${level})`);
-  return await rpc("setParameters", {list: [{id: "Volume", name: "Volume", normalized_value: Number(level)}]});
+  return await rpc("setParameters", {list: [{id: "volume", name: "Volume", normalized_value: Number(level)}]});
 }
 
 async function load_preset(name, bank) {
   console.log(`load_preset(${name}, ${bank})`);
   return await rpc("loadPreset", {name: name, bank: bank});
-}
-
-async function set_sound_output(output_mode) {
-  console.log(`set_sound_output(${output_mode})`);
-  return await rpc("setParameters", {list: [{id: "Output Mode", text: output_mode}]})
 }
 
 async function set_reverb(reverb) {
@@ -124,4 +111,4 @@ async function set_metronome(enabled) {
   return await rpc("setMetronome", {enabled: enabled});
 }
 
-export { rpc, get_display_data, load_preset, set_sound_output, set_reverb, config_metronome, set_metronome, set_volume }
+export { rpc, get_display_data, load_preset, set_reverb, config_metronome, set_metronome, set_volume }
